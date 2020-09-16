@@ -1,0 +1,161 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Inbox</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        id="bootstrap-css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" href="{% static 'css/chat.css' %}">
+    <style>
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .msg_card_body::-webkit-scrollbar {
+        display: none;
+        }
+
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .msg_card_body {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+
+<body>
+    {#% include 'main/parts/top-navbar.html' %#}
+    <div class="container-fluid h-100">
+        <div class="row justify-content-center h-100">
+            <div class="col-md-4 col-xl-3 chat">
+                <div class="card mb-sm-3 mb-md-0 contacts_card">
+                    <div class="card-header">
+                        <div class="input-group">
+                            <input type="text" placeholder="Search..." name="" class="form-control search">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body contacts_body">
+                        <ui class="contacts">
+                            {% for user in users %}
+                            <a class="card-link" href="{% url 'message' user.username %}">
+                                <li>
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+                                                class="rounded-circle user_img">
+                                        </div>
+                                        <div class="user_info">
+                                            <span>{{ user.username }}</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </a>
+                            <hr>
+                            {% endfor %}
+                        </ui>
+                    </div>
+                    <div class="card-footer"></div>
+                </div>
+            </div>
+            <div class="col-md-8 col-xl-6 chat">
+                <div class="card">
+                    <div class="card-header msg_head">
+                        <div class="d-flex bd-highlight">
+                            <div class="img_cont">
+                                <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+                                    class="rounded-circle user_img">
+                            </div>
+                            <div class="user_info">
+                                <span>{{ username }}</span>
+                            </div>
+                        </div>
+                        <span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
+                        <div class="action_menu">
+                            <ul>
+                                <li><i class="fas fa-user-circle"></i> View profile</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body msg_card_body" id="msgList">
+                        {% for message in messages %}
+                        {% if message.msg_from == request.user %}
+                        <div class="d-flex justify-content-end mb-4" id="messageId-{{ message.id }}">
+                            <div class="msg_cotainer_send">
+                                {{ message.msg_body }}
+                                <span class="msg_time_send">8:55 AM, Today</span>
+                            </div>
+                            <div class="img_cont_msg">
+                                <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+                                    class="rounded-circle user_img_msg">
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="d-flex justify-content-start mb-4" id="messageId-{{ message.id }}">
+                            <div class="img_cont_msg">
+                                <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+                                    class="rounded-circle user_img_msg">
+                            </div>
+                            <div class="msg_cotainer">
+                                {{ message.msg_body }}
+                                <span class="msg_time">8:40 AM, Today</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+
+
+                    </div>
+                    <div class="card-footer">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                {{ form.msg_body }}
+                                <div class="input-group-append">
+                                    <button type="submit" class="input-group-text send_btn">
+                                        <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('#action_menu_btn').click(function () {
+                $('.action_menu').toggle();
+            });
+        });
+
+        const msg_body = $("#id_msg_body")
+        msg_body.attr('class', 'form-control type_msg');
+        msg_body.attr('placeholder', 'Type message and smash enter button...');
+        msg_body.focus()
+
+        const last_message_id = "#{{last_message_id}}"
+        $('#msgList').animate({
+            scrollTop: $(last_message_id).offset().top
+        }, 0);
+
+    </script>
+</body>
+
+</html>

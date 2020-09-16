@@ -1,0 +1,10 @@
+{
+    "name": "djangocommands",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "mg": "python manage.py migrate",
+        "mm": "python manage.py makemigrations",
+        "rs": "python manage.py runserver"
+    }
+}

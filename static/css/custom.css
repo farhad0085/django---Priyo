@@ -1,0 +1,25 @@
+.website-icon-logo {
+    margin-right: 2%;
+    float:left; 
+    height:56px;
+    width:56px;	
+} 
+
+.website-list-container {
+    width: 100%;
+    height: auto;
+    padding: 1%;
+    margin-bottom: 4px;
+    border-radius: 5px;
+    background: rgb(248, 252, 250);
+}
+
+.sitelist-link{
+    color: teal;
+    text-decoration: none;
+}
+
+.sitelist-link:hover{
+    color: rgb(221, 204, 204);
+    text-decoration: none;
+}
