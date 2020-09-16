@@ -94,10 +94,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/3.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -115,7 +111,7 @@ LOGIN_URL = 'login'
 MEDIA_URL = "media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 
-SITENAME = "DjangoGram"
+SITENAME = "Priyo"
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
